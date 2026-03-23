@@ -1,7 +1,7 @@
 const WebSocket = require("ws");
 const net = require("net");
 
-const MC_HOST = "YOURSERVER.aternos.me";
+const MC_HOST = "EricNguyen106.aternos.me";
 const MC_PORT = 25565;
 
 const wss = new WebSocket.Server({ port: process.env.PORT || 3000 });
