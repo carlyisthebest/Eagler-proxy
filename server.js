@@ -1,15 +1,23 @@
 const WebSocket = require("ws");
+const net = require("net");
 
-const port = process.env.PORT || 3000;
+const MC_HOST = "YOURSERVER.aternos.me";
+const MC_PORT = 25565;
 
-const server = new WebSocket.Server({ port });
+const wss = new WebSocket.Server({ port: process.env.PORT || 3000 });
 
-server.on("connection", socket => {
-  console.log("Player connected");
+wss.on("connection", function(ws) {
 
-  socket.on("message", message => {
-    console.log("Received:", message.toString());
-  });
+    const socket = new net.Socket();
+
+    socket.connect(MC_PORT, MC_HOST);
+
+    ws.on("message", function(msg) {
+        socket.write(msg);
+    });
+
+    socket.on("data", function(data) {
+        ws.send(data);
+    });
+
 });
-
-console.log("Proxy running on port " + port);
